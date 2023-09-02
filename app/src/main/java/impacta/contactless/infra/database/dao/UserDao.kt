@@ -1,10 +1,10 @@
-package impacta.contactless.database.dao
+package impacta.contactless.infra.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import impacta.contactless.database.models.User
+import impacta.contactless.infra.database.models.User
 import java.util.UUID
 
 @Dao

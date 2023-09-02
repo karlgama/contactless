@@ -1,4 +1,4 @@
-package impacta.contactless.database.models
+package impacta.contactless.infra.database.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
