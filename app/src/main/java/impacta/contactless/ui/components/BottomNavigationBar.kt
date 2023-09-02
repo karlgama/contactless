@@ -23,14 +23,14 @@ fun BottomNavigationBar() {
         backgroundColor = Color.White,
         modifier = Modifier.fillMaxWidth()
     ) {
-        navigationItem("Chaves", Icons.Default.Home,true)
-        navigationItem("Perfil", Icons.Default.AccountCircle)
-        navigationItem("Configurações", Icons.Default.Settings)
+        NavigationItem("Chaves", Icons.Default.Home,true)
+        NavigationItem("Perfil", Icons.Default.AccountCircle)
+        NavigationItem("Configurações", Icons.Default.Settings)
     }
 }
 
 @Composable
-private fun RowScope.navigationItem(text: String, icon: ImageVector, selected: Boolean = false) {
+private fun RowScope.NavigationItem(text: String, icon: ImageVector, selected: Boolean = false) {
     BottomNavigationItem(
         icon = { Icon(icon, "") },
         label = { Text(text) },
