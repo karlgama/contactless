@@ -17,11 +17,13 @@ import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.graphics.Color
+import impacta.contactless.ui.theme.LightGreen
 
 @Composable
 fun BottomNavigationBar() {
     BottomNavigation(
-        backgroundColor = MaterialTheme.colors.primary,
+        backgroundColor = Color.White,
         modifier = Modifier.fillMaxWidth()
     ) {
         BottomNavigationItem(
