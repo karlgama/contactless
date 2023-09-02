@@ -1,13 +1,13 @@
-package impacta.contactless.database
+package impacta.contactless.infra.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import impacta.contactless.database.dao.UserDao
-import impacta.contactless.database.models.AccessKeys
-import impacta.contactless.database.models.AccessLogs
-import impacta.contactless.database.models.User
+import impacta.contactless.infra.database.dao.UserDao
+import impacta.contactless.infra.database.models.AccessKeys
+import impacta.contactless.infra.database.models.AccessLogs
+import impacta.contactless.infra.database.models.User
 
 @Database(entities = [User::class, AccessKeys::class, AccessLogs::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {

@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Contactless</string>
+    <string name="app_name">Keyz</string>
+    <string name="settings_screen">Configurações</string>
 </resources>
