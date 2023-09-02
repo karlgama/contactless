@@ -14,6 +14,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -33,7 +34,7 @@ fun BottomNavigationBar() {
             onClick ={}
         )
         BottomNavigationItem(
-            icon = { Icon(Icons.Default.AccountBox,"") },
+            icon = { Icon(Icons.Default.AccountCircle,"") },
             label = { Text("Perfil") },
             selected = true,
             onClick = {}
