@@ -14,24 +14,41 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import impacta.contactless.R
 import impacta.contactless.ui.theme.KeyzTheme
+import impacta.contactless.ui.theme.md_theme_light_onErrorContainer
+import impacta.contactless.ui.theme.md_theme_light_onPrimary
+import impacta.contactless.ui.theme.md_theme_light_onSurfaceVariant
+import impacta.contactless.ui.theme.md_theme_light_outlineVariant
 
 // Sempre usar Componentes do Material3
 @Composable
 fun SettingsScreen(
     navController: NavController? = null,
 ) {
-    val iconColor = Color(0XFF42493F)
-//    val textColor = Color(0xFF1A1C19)
-    val textColor = Color(0xFFFFFFFF)
-    val alertColor = Color(0xFF93000A)
     Column {
-        IconTextRow(Icons.Default.Search, "Info", textColor, iconColor)
-        IconTextRow(Icons.Default.Add, "Solicitar nova chave", textColor, iconColor)
-        IconTextRow(Icons.Outlined.Cancel, "Apagar conta", alertColor, alertColor)
+        IconTextRow(
+            Icons.Default.Search,
+            stringResource(R.string.info),
+            md_theme_light_onPrimary,
+            md_theme_light_onSurfaceVariant
+        )
+        IconTextRow(
+            Icons.Default.Add,
+            stringResource(R.string.new_key_request),
+            md_theme_light_onPrimary,
+            md_theme_light_onSurfaceVariant
+        )
+        IconTextRow(
+            Icons.Outlined.Cancel,
+            stringResource(R.string.delete_account),
+            md_theme_light_onErrorContainer,
+            md_theme_light_onErrorContainer
+        )
     }
 }
 
@@ -42,7 +59,6 @@ fun IconTextRow(
     textColor: Color,
     iconColor: Color,
 ) {
-    val grey = Color(0XFFC2C8BC)
 
     Row(modifier = Modifier.padding(vertical = 20.dp)) {
         Icon(
@@ -57,7 +73,7 @@ fun IconTextRow(
         )
     }
 
-    Divider(color = grey, thickness = 2.dp)
+    Divider(color = md_theme_light_outlineVariant, thickness = 2.dp)
 }
 
 @Preview(showBackground = true)
