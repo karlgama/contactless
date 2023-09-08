@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -22,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -48,7 +51,14 @@ class MainActivity : ComponentActivity() {
             KeyzTheme {
                 Scaffold(topBar = {
                     TopAppBar(backgroundColor = MaterialTheme.colorScheme.primaryContainer,
-                        title = { Text("Keyz", fontWeight = FontWeight.Bold) })
+                        title = {
+                            Text(
+                                "Keyz",
+                                fontWeight = FontWeight.Bold,
+                                modifier=Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
+                            )
+                        })
                 }, bottomBar = {
                     BottomNavigation(
                         modifier = Modifier.height(Dp(64.0f)),
