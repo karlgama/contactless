@@ -5,11 +5,12 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import impacta.contactless.ui.theme.KeyzTheme
+import impacta.contactless.ui.components.EmptyCards
+import impacta.contactless.ui.components.KeyCard
+import java.util.Objects
 
 // Sempre usar Componentes do Material3
 @Composable
@@ -27,19 +28,14 @@ fun ActiveKeysScreen(
         CircularProgressIndicator()
     } else if (activeKeyState is ActiveKeysUIState.Error) {
         Text("Erro ao recuperar chave")
-    } else if (activeKeyState is ActiveKeysUIState.Success){
-        Text(
-            activeKeyState.code ?: "Parece que vocên não tem chave ativa"
-        )
+    } else if (activeKeyState is ActiveKeysUIState.Success) {
+        if (Objects.isNull(activeKeyState.code))
+            EmptyCards()
+        else
+            KeyCard()
     } else {
         Text("Não previa cair aqui...")
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    KeyzTheme {
-        ActiveKeysScreen()
-    }
-}
+
