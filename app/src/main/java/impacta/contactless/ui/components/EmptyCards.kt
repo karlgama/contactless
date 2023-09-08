@@ -15,7 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import impacta.contactless.R
+import impacta.contactless.ui.theme.border_default_grey
 
 @Composable
 fun EmptyCards() {
@@ -33,7 +34,7 @@ fun EmptyCards() {
     ) {
         Row(Modifier.padding(horizontal = 50.dp, vertical = 20.dp)) {
             Text(
-                text = "Você não tem chave ativa",
+                text = stringResource(R.string.no_active_key),
                 fontSize = 24.sp,
                 modifier = Modifier.fillMaxWidth(),
                 fontWeight = FontWeight.Bold,
@@ -63,7 +64,7 @@ fun CardImage(horizontalOffSet: Dp, rotate: Float) {
         Image(
             painter = rememberAsyncImagePainter(R.drawable.undraw_card),
             contentDescription = null,
-            modifier = Modifier.border(2.dp, Color(0xFFF3F3F3))
+            modifier = Modifier.border(2.dp, border_default_grey)
         )
 
 

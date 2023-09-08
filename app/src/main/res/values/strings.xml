@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Keyz</string>
     <string name="settings_screen">Configurações</string>
+    <string name="info">Info</string>
+    <string name="new_key_request">Solicitar nova chave</string>
+    <string name="delete_account">Apagar conta</string>
+    <string name="no_active_key">Você não tem chave ativa</string>
+    <string name="active_key">Sua chave ativa</string>
+    <string name="key_from">"Chave do "</string>
 </resources>
