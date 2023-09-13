@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,11 +63,16 @@ fun CardImage(horizontalOffSet: Dp, rotate: Float) {
 
     ) {
         Image(
-            painter = rememberAsyncImagePainter(R.drawable.undraw_card),
+            painter = rememberAsyncImagePainter(R.drawable.undraw_card_foreground),
             contentDescription = null,
-            modifier = Modifier.border(2.dp, border_default_grey)
+//            modifier = Modifier.border(2.dp, border_default_grey)
         )
 
-
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun PreviewEmptyCards(){
+    EmptyCards()
 }
