@@ -1,5 +1,6 @@
 package impacta.contactless.features.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -20,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import impacta.contactless.R
 import impacta.contactless.ui.theme.KeyzTheme
-import impacta.contactless.ui.theme.md_theme_light_onErrorContainer
+import impacta.contactless.ui.theme.md_theme_dark_errorContainer
 import impacta.contactless.ui.theme.md_theme_light_onPrimary
 import impacta.contactless.ui.theme.md_theme_light_onSurfaceVariant
 import impacta.contactless.ui.theme.md_theme_light_outlineVariant
@@ -28,26 +29,29 @@ import impacta.contactless.ui.theme.md_theme_light_outlineVariant
 // Sempre usar Componentes do Material3
 @Composable
 fun SettingsScreen(
-    navController: NavController? = null,
+    navController: NavController? = null
 ) {
     Column {
         IconTextRow(
             Icons.Default.Search,
             stringResource(R.string.info),
             md_theme_light_onPrimary,
-            md_theme_light_onSurfaceVariant
+            md_theme_light_onSurfaceVariant,
+            {}
         )
         IconTextRow(
             Icons.Default.Add,
             stringResource(R.string.new_key_request),
             md_theme_light_onPrimary,
-            md_theme_light_onSurfaceVariant
+            md_theme_light_onSurfaceVariant,
+            {}
         )
         IconTextRow(
             Icons.Outlined.Cancel,
             stringResource(R.string.delete_account),
-            md_theme_light_onErrorContainer,
-            md_theme_light_onErrorContainer
+            md_theme_dark_errorContainer,
+            md_theme_dark_errorContainer,
+            {}
         )
     }
 }
@@ -58,9 +62,12 @@ fun IconTextRow(
     text: String,
     textColor: Color,
     iconColor: Color,
+    onClick: () -> Unit
 ) {
 
-    Row(modifier = Modifier.padding(vertical = 20.dp)) {
+    Row(modifier = Modifier
+        .padding(vertical = 20.dp)
+        .clickable { }) {
         Icon(
             icon, contentDescription = null, tint = iconColor,
             modifier = Modifier

@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,19 +33,20 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import impacta.contactless.features.activekeys.ActiveKeysScreen
+import impacta.contactless.features.login.LoginScreen
 import impacta.contactless.features.settings.SettingsScreen
 import impacta.contactless.infra.navigation.Screen
 import impacta.contactless.ui.theme.KeyzTheme
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity() : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
             val items = listOf(
-                Screen.ActiveKeys, Screen.Settings
+                Screen.ActiveKeys, Screen.Settings,Screen.Login
             )
             KeyzTheme {
                 Scaffold(topBar = {
@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
                             Text(
                                 "Keyz",
                                 fontWeight = FontWeight.Bold,
-                                modifier=Modifier.fillMaxWidth(),
+                                modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center
                             )
                         })
@@ -107,6 +107,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(Screen.ActiveKeys.route) { ActiveKeysScreen(navController) }
                         composable(Screen.Settings.route) { SettingsScreen(navController) }
+                        composable(Screen.Login.route) { LoginScreen(navController) }
                     }
                 }
             }

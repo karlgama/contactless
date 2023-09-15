@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -35,27 +36,26 @@ fun KeyCard() {
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold
         )
-        Box(
-            modifier = Modifier
-                .background(
-                    md_theme_light_secondary,
-                    shape = RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp)
-                )
-                .fillMaxSize()
-                .padding(horizontal = 30.dp, vertical = 20.dp)
-        ) {
-            Column {
-                Text(
-                    stringResource(R.string.key_from),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = md_theme_light_onPrimary
-                )
-                Text(
-                    UUID.randomUUID().toString(),
-                    fontSize = 14.sp,
-                    color = md_theme_light_onPrimary
-                )
+        Surface(shape = RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp)) {
+            Box(
+                modifier = Modifier
+                    .background(md_theme_light_secondary)
+                    .fillMaxSize()
+                    .padding(horizontal = 30.dp, vertical = 20.dp)
+            ) {
+                Column {
+                    Text(
+                        stringResource(R.string.key_from),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = md_theme_light_onPrimary
+                    )
+                    Text(
+                        UUID.randomUUID().toString(),
+                        fontSize = 14.sp,
+                        color = md_theme_light_onPrimary
+                    )
+                }
             }
         }
     }

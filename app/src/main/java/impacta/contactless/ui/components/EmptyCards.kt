@@ -1,7 +1,6 @@
 package impacta.contactless.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import impacta.contactless.R
-import impacta.contactless.ui.theme.border_default_grey
 
 @Composable
 fun EmptyCards() {
@@ -73,6 +71,6 @@ fun CardImage(horizontalOffSet: Dp, rotate: Float) {
 
 @Composable
 @Preview(showBackground = true)
-private fun PreviewEmptyCards(){
+private fun PreviewEmptyCards() {
     EmptyCards()
 }

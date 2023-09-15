@@ -24,18 +24,18 @@ fun ActiveKeysScreen(
     viewModel.getKey("123")
     Log.d("KEYZ", activeKeyState.toString())
 
-//    if (activeKeyState is ActiveKeysUIState.Loading) {
-//        CircularProgressIndicator()
-//    } else if (activeKeyState is ActiveKeysUIState.Error) {
-//        Text("Erro ao recuperar chave")
-//    } else if (activeKeyState is ActiveKeysUIState.Success) {
-//        if (Objects.isNull(activeKeyState.code))
+    if (activeKeyState is ActiveKeysUIState.Loading) {
+        CircularProgressIndicator()
+    } else if (activeKeyState is ActiveKeysUIState.Error) {
+        Text("Erro ao recuperar chave")
+    } else if (activeKeyState is ActiveKeysUIState.Success) {
+        if (Objects.isNull(activeKeyState.code))
             EmptyCards()
-//        else
-//            KeyCard()
-//    } else {
-//        Text("Não previa cair aqui...")
-//    }
+        else
+            KeyCard()
+    } else {
+        Text("Não previa cair aqui...")
+    }
 }
 
 
