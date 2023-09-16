@@ -14,20 +14,32 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import impacta.contactless.R
 
 
 @Composable
-fun LoginScreen(
-    navController: NavController? = null
+fun SignInScreen(
+    navController: NavController? = null,
+    state: SignInState,
+    onSignInClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    LaunchedEffect(key1 = state.signInError) {
+        state.signInError?.let { error ->
+            Toast.makeText(
+                context, error,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
     Column(
         Modifier
             .padding(10.dp)
@@ -45,19 +57,17 @@ fun LoginScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            LoginOptionButton("Google")
-            LoginOptionButton("Facebook")
+            LoginOptionButton("Google", onSignInClick)
+//            LoginOptionButton("Facebook")
         }
     }
 }
 
 @Composable
-private fun LoginOptionButton(content: String) {
+private fun LoginOptionButton(content: String, onSignInClick: () -> Unit) {
     Button(
         content = { Text(text = content) },
-        onClick = {
-            Toast.makeText(null, "google", Toast.LENGTH_SHORT).show()
-        },
+        onClick = onSignInClick,
         elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 5.dp),
         modifier = Modifier
             .widthIn(min = 120.dp),
@@ -69,8 +79,3 @@ private fun LoginOptionButton(content: String) {
 }
 
 
-@Composable
-@Preview(showBackground = true, widthDp = 300, heightDp = 600)
-private fun PreviewSignInScreen() {
-    LoginScreen()
-}

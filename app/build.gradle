@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id("com.google.gms.google-services")
 }
 
 def appPropertiesFile = rootProject.file("app.properties")
@@ -63,7 +64,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
 
     // COMPOSE
-
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.2'
@@ -74,6 +74,16 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
     implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.0-beta01"
+
+//    firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+//    face
+//    implementation 'com.facebook.android:facebook-login:latest.release'
+
 
     //svg support
     implementation("io.coil-kt:coil-svg:2.4.0")
@@ -92,6 +102,8 @@ dependencies {
 
     // HILT
     implementation "com.google.dagger:hilt-android:2.44"
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     // NAVIGATION
