@@ -45,14 +45,14 @@ fun LoginScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            loginOptionButton("Google")
-            loginOptionButton("Facebook")
+            LoginOptionButton("Google")
+            LoginOptionButton("Facebook")
         }
     }
 }
 
 @Composable
-private fun loginOptionButton(content: String) {
+private fun LoginOptionButton(content: String) {
     Button(
         content = { Text(text = content) },
         onClick = {
