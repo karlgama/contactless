@@ -22,16 +22,29 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import impacta.contactless.R
+import impacta.contactless.infra.navigation.Screen
 
 
 @Composable
 fun SignInScreen(
-    navController: NavController? = null,
+    navController: NavController,
     state: SignInState,
     onSignInClick: () -> Unit
 ) {
     val context = LocalContext.current
+    val nextScreen =  Screen.ActiveKeys
+
+    if(state.isSignInSuccessful)
+        navController.navigate(nextScreen.route){
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+
     LaunchedEffect(key1 = state.signInError) {
         state.signInError?.let { error ->
             Toast.makeText(

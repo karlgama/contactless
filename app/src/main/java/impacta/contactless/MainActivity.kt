@@ -47,6 +47,7 @@ import impacta.contactless.features.activekeys.ActiveKeysScreen
 import impacta.contactless.features.login.SignInScreen
 import impacta.contactless.features.login.SignInScreenViewModel
 import impacta.contactless.features.settings.SettingsScreen
+import impacta.contactless.infra.database.models.UserData
 import impacta.contactless.infra.navigation.Screen
 import impacta.contactless.ui.GoogleAuthUiClient
 import impacta.contactless.ui.theme.KeyzTheme
@@ -60,7 +61,6 @@ class MainActivity() : ComponentActivity() {
             oneTapClient = Identity.getSignInClient(applicationContext)
         )
     }
-
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,7 +106,7 @@ class MainActivity() : ComponentActivity() {
                                     ).show()
                             }
 
-                            SignInScreen(state = state, onSignInClick = {
+                            SignInScreen(navController, state = state, onSignInClick = {
                                 lifecycleScope.launch {
                                     val signInIntentSender = googleAuthUiClient.signIn()
                                     launcher.launch(
