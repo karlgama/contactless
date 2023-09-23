@@ -1,6 +1,9 @@
-package impacta.contactless.features.login
+package impacta.contactless.features.signin
 
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,23 +24,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import impacta.contactless.R
 import impacta.contactless.infra.navigation.Screen
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun SignInScreen(
-    navController: NavController,
-    state: SignInState,
-    onSignInClick: () -> Unit
+    navController: NavController
 ) {
     val context = LocalContext.current
-    val nextScreen =  Screen.ActiveKeys
+    val viewModel: SignInScreenViewModel = hiltViewModel()
+    val state by viewModel.sign.collectAsStateWithLifecycle()
 
     if(state.isSignInSuccessful)
-        navController.navigate(nextScreen.route){
+        navController.navigate(Screen.ActiveKeys.route){
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
@@ -70,7 +76,7 @@ fun SignInScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            LoginOptionButton("Google", onSignInClick)
+            LoginOptionButton("Google") { viewModel.onSignIn() }
 //            LoginOptionButton("Facebook")
         }
     }
@@ -92,3 +98,20 @@ private fun LoginOptionButton(content: String, onSignInClick: () -> Unit) {
 }
 
 
+
+
+//lifecycleScope.launch {
+//    val signInIntentSender = googleAuthUiClient.signIn()
+//    launcher.launch(
+//        IntentSenderRequest.Builder(
+//            signInIntentSender ?: return@launch
+//        ).build()
+//    )
+//}
+//
+//
+//launcher.launch(
+//IntentSenderRequest.Builder(
+//signInIntentSender ?: return@launch
+//).build()
+//)

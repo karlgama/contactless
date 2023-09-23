@@ -44,10 +44,9 @@ import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.auth.api.identity.Identity
 import dagger.hilt.android.AndroidEntryPoint
 import impacta.contactless.features.activekeys.ActiveKeysScreen
-import impacta.contactless.features.login.SignInScreen
-import impacta.contactless.features.login.SignInScreenViewModel
+import impacta.contactless.features.signin.SignInScreen
+import impacta.contactless.features.signin.SignInScreenViewModel
 import impacta.contactless.features.settings.SettingsScreen
-import impacta.contactless.infra.database.models.UserData
 import impacta.contactless.infra.navigation.Screen
 import impacta.contactless.ui.GoogleAuthUiClient
 import impacta.contactless.ui.theme.KeyzTheme
@@ -61,13 +60,14 @@ class MainActivity() : ComponentActivity() {
             oneTapClient = Identity.getSignInClient(applicationContext)
         )
     }
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
             val items = listOf(
-                Screen.ActiveKeys, Screen.Settings, Screen.SignIn
+                Screen.ActiveKeys, Screen.Settings
             )
             KeyzTheme {
                 Scaffold(topBar = {
@@ -82,7 +82,7 @@ class MainActivity() : ComponentActivity() {
                     ) {
                         composable(Screen.SignIn.route) {
                             val viewModel = viewModel<SignInScreenViewModel>()
-                            val state by viewModel.state.collectAsStateWithLifecycle()
+                            val state by viewModel.sign.collectAsStateWithLifecycle()
 
                             val launcher = rememberLauncherForActivityResult(
                                 contract = ActivityResultContracts.StartIntentSenderForResult(),
@@ -97,6 +97,11 @@ class MainActivity() : ComponentActivity() {
                                     }
                                 }
                             )
+
+                            LaunchedEffect(key1 = Unit) {
+                                if (googleAuthUiClient.getSignedInUser() != null)
+                                    navController.navigate(Screen.ActiveKeys.route)
+                            }
 
                             LaunchedEffect(key1 = state.isSignInSuccessful) {
                                 if (state.isSignInSuccessful)
