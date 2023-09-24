@@ -30,7 +30,7 @@ data class SignInScreenUIState(
 
 @HiltViewModel
 class SignInScreenViewModel @Inject constructor(
-    private val googleAuthUiClient: GoogleAuthUiClient
+    var googleAuthUiClient: GoogleAuthUiClient
 ) : ViewModel() {
 
     private val _sign = MutableStateFlow(SignInScreenUIState(SignInUIState.Loading))
@@ -47,6 +47,10 @@ class SignInScreenViewModel @Inject constructor(
         return resultLiveData
     }
 
+    suspend fun signInWithIntent(intent: Intent): SignInResult {
+        return googleAuthUiClient.signInWithIntent(intent)
+    }
+
     fun onSignResult(result: SignInResult) {
         _sign.update {
             it.copy(
@@ -57,18 +61,6 @@ class SignInScreenViewModel @Inject constructor(
             )
         }
     }
-
-
-//    fun onSignIn(launcher: ManagedActivityResultLauncher<IntentSenderRequest, ActivityResult>) {
-//        viewModelScope.launch {
-//            val signInIntentSender = googleAuthUiClient.signIn()
-//            launcher.launch(
-//                IntentSenderRequest.Builder(
-//                    signInIntentSender ?: return@launch
-//                ).build()
-//            )
-//        }
-//    }
 
     fun resetState() {
         _sign.value = SignInScreenUIState(SignInUIState.Loading)

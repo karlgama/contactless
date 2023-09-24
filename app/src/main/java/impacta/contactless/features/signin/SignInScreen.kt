@@ -2,9 +2,6 @@ package impacta.contactless.features.signin
 
 import android.content.Intent
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,24 +25,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import impacta.contactless.R
 import impacta.contactless.infra.navigation.Screen
-import kotlinx.coroutines.launch
+import impacta.contactless.ui.GoogleAuthUiClient
 
 
 @Composable
 fun SignInScreen(
-    navController: NavController
+    navController: NavController,
+    intent: Intent
 ) {
     val context = LocalContext.current
     val viewModel: SignInScreenViewModel = hiltViewModel()
-
     val signState by viewModel.sign.collectAsStateWithLifecycle()
     val signInState = signState.signInUIState
-
 
     if (signInState is SignInUIState.Success)
         navController.navigate(Screen.ActiveKeys.route) {
@@ -81,7 +76,7 @@ fun SignInScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            LoginOptionButton("Google") { viewModel.onSignIn() }
+            LoginOptionButton("Google") { viewModel.onSignIn(intent) }
 //            LoginOptionButton("Facebook")
         }
     }
@@ -116,3 +111,4 @@ private fun LoginOptionButton(content: String, onSignInClick: () -> Unit) {
 //        }
 //    }
 //)
+

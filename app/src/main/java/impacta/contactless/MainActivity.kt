@@ -80,48 +80,48 @@ class MainActivity() : ComponentActivity() {
                         startDestination = Screen.SignIn.route,
                         Modifier.padding(innerPadding)
                     ) {
-                        composable(Screen.SignIn.route) {
-                            val viewModel = viewModel<SignInScreenViewModel>()
-                            val state by viewModel.sign.collectAsStateWithLifecycle()
-
-                            val launcher = rememberLauncherForActivityResult(
-                                contract = ActivityResultContracts.StartIntentSenderForResult(),
-                                onResult = { result ->
-                                    if (result.resultCode == RESULT_OK) {
-                                        lifecycleScope.launch {
-                                            val signInResult = googleAuthUiClient.signInWithIntent(
-                                                intent = result.data ?: return@launch
-                                            )
-                                            viewModel.onSignResult(signInResult)
-                                        }
-                                    }
-                                }
-                            )
-
-                            LaunchedEffect(key1 = Unit) {
-                                if (googleAuthUiClient.getSignedInUser() != null)
-                                    navController.navigate(Screen.ActiveKeys.route)
-                            }
-
-                            LaunchedEffect(key1 = state.isSignInSuccessful) {
-                                if (state.isSignInSuccessful)
-                                    Toast.makeText(
-                                        applicationContext, "Sign in successful",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                            }
-
-                            SignInScreen(navController, state = state, onSignInClick = {
-                                lifecycleScope.launch {
-                                    val signInIntentSender = googleAuthUiClient.signIn()
-                                    launcher.launch(
-                                        IntentSenderRequest.Builder(
-                                            signInIntentSender ?: return@launch
-                                        ).build()
-                                    )
-                                }
-                            })
-                        }
+//                        composable(Screen.SignIn.route) {
+//                            val viewModel = viewModel<SignInScreenViewModel>()
+//                            val state by viewModel.sign.collectAsStateWithLifecycle()
+//
+//                            val launcher = rememberLauncherForActivityResult(
+//                                contract = ActivityResultContracts.StartIntentSenderForResult(),
+//                                onResult = { result ->
+//                                    if (result.resultCode == RESULT_OK) {
+//                                        lifecycleScope.launch {
+//                                            val signInResult = googleAuthUiClient.signInWithIntent(
+//                                                intent = result.data ?: return@launch
+//                                            )
+//                                            viewModel.onSignResult(signInResult)
+//                                        }
+//                                    }
+//                                }
+//                            )
+//
+//                            LaunchedEffect(key1 = Unit) {
+//                                if (googleAuthUiClient.getSignedInUser() != null)
+//                                    navController.navigate(Screen.ActiveKeys.route)
+//                            }
+//
+//                            LaunchedEffect(key1 = state.isSignInSuccessful) {
+//                                if (state.isSignInSuccessful)
+//                                    Toast.makeText(
+//                                        applicationContext, "Sign in successful",
+//                                        Toast.LENGTH_LONG
+//                                    ).show()
+//                            }
+//
+//                            SignInScreen(navController, state = state, onSignInClick = {
+//                                lifecycleScope.launch {
+//                                    val signInIntentSender = googleAuthUiClient.signIn()
+//                                    launcher.launch(
+//                                        IntentSenderRequest.Builder(
+//                                            signInIntentSender ?: return@launch
+//                                        ).build()
+//                                    )
+//                                }
+//                            })
+//                        }
                         composable(Screen.ActiveKeys.route) { ActiveKeysScreen(navController) }
                         composable(Screen.Settings.route) { SettingsScreen(navController) }
                     }

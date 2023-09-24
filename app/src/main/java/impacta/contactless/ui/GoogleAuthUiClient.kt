@@ -15,8 +15,9 @@ import impacta.contactless.infra.database.models.SignInResult
 import impacta.contactless.infra.database.models.UserData
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
+import javax.inject.Inject
 
-class GoogleAuthUiClient constructor(
+class GoogleAuthUiClient @Inject constructor(
     private val context: Context,
     private val oneTapClient: SignInClient,
 ) {
