@@ -1,5 +1,6 @@
 package impacta.contactless.features.signin
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -18,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -40,10 +42,13 @@ fun SignInScreen(
 ) {
     val context = LocalContext.current
     val viewModel: SignInScreenViewModel = hiltViewModel()
-    val state by viewModel.sign.collectAsStateWithLifecycle()
 
-    if(state.isSignInSuccessful)
-        navController.navigate(Screen.ActiveKeys.route){
+    val signState by viewModel.sign.collectAsStateWithLifecycle()
+    val signInState = signState.signInUIState
+
+
+    if (signInState is SignInUIState.Success)
+        navController.navigate(Screen.ActiveKeys.route) {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
@@ -51,13 +56,13 @@ fun SignInScreen(
             restoreState = true
         }
 
-    LaunchedEffect(key1 = state.signInError) {
-        state.signInError?.let { error ->
+    LaunchedEffect(key1 = signInState) {
+        if (signInState is SignInUIState.Error)
             Toast.makeText(
-                context, error,
+                context, "Error on sign in",
                 Toast.LENGTH_SHORT
             ).show()
-        }
+
     }
     Column(
         Modifier
@@ -97,21 +102,17 @@ private fun LoginOptionButton(content: String, onSignInClick: () -> Unit) {
     )
 }
 
-
-
-
-//lifecycleScope.launch {
-//    val signInIntentSender = googleAuthUiClient.signIn()
-//    launcher.launch(
-//        IntentSenderRequest.Builder(
-//            signInIntentSender ?: return@launch
-//        ).build()
-//    )
-//}
 //
-//
-//launcher.launch(
-//IntentSenderRequest.Builder(
-//signInIntentSender ?: return@launch
-//).build()
+//val launcher = rememberLauncherForActivityResult(
+//    contract = ActivityResultContracts.StartIntentSenderForResult(),
+//    onResult = { result ->
+//        if (result.resultCode == ComponentActivity.RESULT_OK) {
+//            lifecycleScope.launch {
+//                val signInResult = googleAuthUiClient.signInWithIntent(
+//                    intent = result.data ?: return@launch
+//                )
+//                viewModel.onSignResult(signInResult)
+//            }
+//        }
+//    }
 //)
