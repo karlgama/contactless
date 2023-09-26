@@ -124,6 +124,10 @@ class MainActivity() : ComponentActivity() {
 //                        }
                         composable(Screen.ActiveKeys.route) { ActiveKeysScreen(navController) }
                         composable(Screen.Settings.route) { SettingsScreen(navController) }
+                        composable(Screen.SignIn.route) { SignInScreen(
+                            navController = navController,
+                            intent = null
+                        )}
                     }
                 }
             }

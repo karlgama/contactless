@@ -2,6 +2,8 @@ package impacta.contactless.infra
 
 import android.content.Context
 import androidx.room.Room
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +15,7 @@ import impacta.contactless.infra.database.AppDatabase
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import impacta.contactless.BuildConfig
+import impacta.contactless.ui.GoogleAuthUiClient
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,4 +31,10 @@ class KZAppDI {
     @Provides
     fun provideDB(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "contactless.db").build()
+
+    @Provides
+    fun provideOneTapClient(@ApplicationContext context: Context): SignInClient = Identity.getSignInClient(context)
+
+    @Provides
+    fun provideGoogleAuthUIClient(@ApplicationContext context: Context, oneTapClient: SignInClient) = GoogleAuthUiClient(context, oneTapClient)
 }

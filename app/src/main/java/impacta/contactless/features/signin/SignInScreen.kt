@@ -35,7 +35,7 @@ import impacta.contactless.ui.GoogleAuthUiClient
 @Composable
 fun SignInScreen(
     navController: NavController,
-    intent: Intent
+    intent: Intent?
 ) {
     val context = LocalContext.current
     val viewModel: SignInScreenViewModel = hiltViewModel()
@@ -76,7 +76,11 @@ fun SignInScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            LoginOptionButton("Google") { viewModel.onSignIn(intent) }
+            LoginOptionButton("Google") {
+                intent?.let {it ->
+                    viewModel.onSignIn(it)
+                }
+            }
 //            LoginOptionButton("Facebook")
         }
     }
