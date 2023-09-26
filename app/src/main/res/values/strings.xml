@@ -11,5 +11,6 @@
     <string name="login_title">Faça login com</string>
     <string name="img_description_grey_lock">Grey lock</string>
     <string name="web_client_id">887634639920-ga0fa5d51suuop11jimmaedo6alqimul.apps.googleusercontent.com</string>
-
+    <string name="servicedesc">servicedesc</string>
+    <string name="aiddescription">aiddescription</string>
 </resources>

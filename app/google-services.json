@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "887634639920",
+    "project_id": "keyz-126cb",
+    "storage_bucket": "keyz-126cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:887634639920:android:db2f5b9ae0b1e83ea181f5",
+        "android_client_info": {
+          "package_name": "impacta.contactless"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "887634639920-a3bb0imn5r8n45eh8o3gaiihn1et2kuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "impacta.contactless",
+            "certificate_hash": "c573c43b734f35afb5fa1b5b28916d6440b59e8b"
+          }
+        },
+        {
+          "client_id": "887634639920-ga0fa5d51suuop11jimmaedo6alqimul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgb3IQJcHVjUXdp9ozm0PtPbftJ6yjYTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "887634639920-ctrdl8f5nj1gpu1e9e0p9ecdvgdjp6g6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

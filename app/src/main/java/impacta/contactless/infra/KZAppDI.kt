@@ -13,6 +13,7 @@ import impacta.contactless.infra.database.AppDatabase
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import impacta.contactless.BuildConfig
+import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -22,7 +23,7 @@ class KZAppDI {
     fun provideAWShttpClient(): Retrofit = Retrofit
         .Builder()
         .baseUrl(BuildConfig.AWS_BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     @Provides

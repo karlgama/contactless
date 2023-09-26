@@ -1,5 +1,6 @@
 package impacta.contactless.features.activekeys.domain
 
+import android.util.Log
 import impacta.contactless.features.activekeys.data.KeysRepository
 import impacta.contactless.infra.utils.Result
 import kotlinx.coroutines.flow.Flow
@@ -14,6 +15,9 @@ class GetKeyForUserUseCase @Inject constructor(
         try {
             emit(Result.Success(repository.getKeyForUser(userId)))
         } catch (e: Exception) {
+            e.localizedMessage?.let { message ->
+                Log.e("KEYZ AWS API", message)
+            }
             emit(Result.Failure(e))
         }
     }

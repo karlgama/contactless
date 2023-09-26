@@ -1,6 +1,11 @@
 package impacta.contactless.ui.components
 
+import android.app.Activity
+import impacta.contactless.infra.utils.findActivity
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +16,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -18,12 +24,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import impacta.contactless.R
+import impacta.contactless.features.activekeys.domain.HCEService
 import impacta.contactless.ui.theme.md_theme_light_onPrimary
 import impacta.contactless.ui.theme.md_theme_light_secondary
 import java.util.UUID
 
 @Composable
-fun KeyCard() {
+fun KeyCard(key: String) {
+    val activity: Activity = LocalContext.current.findActivity()
+
     Column(
         Modifier
             .padding(horizontal = 30.dp)
@@ -36,7 +45,11 @@ fun KeyCard() {
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold
         )
-        Surface(shape = RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp)) {
+        Surface(shape = RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp), modifier = Modifier.clickable {
+            val intent = Intent(activity, HCEService::class.java)
+            intent.putExtra("ndefMessage", key)
+            activity.startService(intent)
+        }) {
             Box(
                 modifier = Modifier
                     .background(md_theme_light_secondary)
@@ -51,7 +64,7 @@ fun KeyCard() {
                         color = md_theme_light_onPrimary
                     )
                     Text(
-                        UUID.randomUUID().toString(),
+                        key,
                         fontSize = 14.sp,
                         color = md_theme_light_onPrimary
                     )
@@ -65,6 +78,6 @@ fun KeyCard() {
 @Composable
 fun previewKeyCard() {
     Column {
-        KeyCard()
+        KeyCard(UUID.randomUUID().toString())
     }
 }

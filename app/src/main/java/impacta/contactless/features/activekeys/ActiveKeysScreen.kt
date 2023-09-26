@@ -1,5 +1,6 @@
 package impacta.contactless.features.activekeys
 
+import android.nfc.NfcAdapter
 import android.util.Log
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -21,7 +22,9 @@ fun ActiveKeysScreen(
     val viewModel: ActiveKeysViewModel = hiltViewModel()
     val keyState by viewModel.key.collectAsStateWithLifecycle()
     val activeKeyState = keyState.activeKeysUIState
-    viewModel.getKey("123")
+    val mNfcAdapter: NfcAdapter? = null
+
+    viewModel.getKey("01H14G3SP74WAPZSFX4BSSHPH0")
     Log.d("KEYZ", activeKeyState.toString())
 
     if (activeKeyState is ActiveKeysUIState.Loading) {
@@ -32,7 +35,7 @@ fun ActiveKeysScreen(
         if (Objects.isNull(activeKeyState.code))
             EmptyCards()
         else
-            KeyCard()
+            KeyCard(key = activeKeyState.code!!)
     } else {
         Text("Não previa cair aqui...")
     }
