@@ -1,6 +1,7 @@
 package impacta.contactless.features.signin
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,7 +31,7 @@ data class SignInScreenUIState(
 
 @HiltViewModel
 class SignInScreenViewModel @Inject constructor(
-    var googleAuthUiClient: GoogleAuthUiClient
+    private val googleAuthUiClient: GoogleAuthUiClient
 ) : ViewModel() {
 
     private val _sign = MutableStateFlow(SignInScreenUIState(SignInUIState.Loading))
@@ -38,7 +39,7 @@ class SignInScreenViewModel @Inject constructor(
 
     fun onSignIn(intent: Intent): LiveData<SignInResult> {
         val resultLiveData = MutableLiveData<SignInResult>()
-
+        Log.d("KEYZ","logging attempt")
         viewModelScope.launch {
             val signInResult = googleAuthUiClient.signInWithIntent(intent)
             resultLiveData.value = signInResult
@@ -51,7 +52,7 @@ class SignInScreenViewModel @Inject constructor(
         return googleAuthUiClient.signInWithIntent(intent)
     }
 
-    fun onSignResult(result: SignInResult) {
+    fun onSignInResult(result: SignInResult) {
         _sign.update {
             it.copy(
                 signInUIState = SignInUIState.Success(

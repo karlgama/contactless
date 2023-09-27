@@ -1,5 +1,6 @@
 package impacta.contactless
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -49,18 +50,12 @@ import impacta.contactless.features.signin.SignInScreenViewModel
 import impacta.contactless.features.settings.SettingsScreen
 import impacta.contactless.infra.navigation.Screen
 import impacta.contactless.ui.GoogleAuthUiClient
+import impacta.contactless.ui.activities.SignInActivity
 import impacta.contactless.ui.theme.KeyzTheme
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity() : ComponentActivity() {
-    private val googleAuthUiClient by lazy {
-        GoogleAuthUiClient(
-            context = applicationContext,
-            oneTapClient = Identity.getSignInClient(applicationContext)
-        )
-    }
-
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,57 +72,16 @@ class MainActivity() : ComponentActivity() {
                 }) { innerPadding ->
                     NavHost(
                         navController,
-                        startDestination = Screen.SignIn.route,
+                        startDestination = Screen.ActiveKeys.route,
                         Modifier.padding(innerPadding)
                     ) {
-//                        composable(Screen.SignIn.route) {
-//                            val viewModel = viewModel<SignInScreenViewModel>()
-//                            val state by viewModel.sign.collectAsStateWithLifecycle()
-//
-//                            val launcher = rememberLauncherForActivityResult(
-//                                contract = ActivityResultContracts.StartIntentSenderForResult(),
-//                                onResult = { result ->
-//                                    if (result.resultCode == RESULT_OK) {
-//                                        lifecycleScope.launch {
-//                                            val signInResult = googleAuthUiClient.signInWithIntent(
-//                                                intent = result.data ?: return@launch
-//                                            )
-//                                            viewModel.onSignResult(signInResult)
-//                                        }
-//                                    }
-//                                }
-//                            )
-//
-//                            LaunchedEffect(key1 = Unit) {
-//                                if (googleAuthUiClient.getSignedInUser() != null)
-//                                    navController.navigate(Screen.ActiveKeys.route)
-//                            }
-//
-//                            LaunchedEffect(key1 = state.isSignInSuccessful) {
-//                                if (state.isSignInSuccessful)
-//                                    Toast.makeText(
-//                                        applicationContext, "Sign in successful",
-//                                        Toast.LENGTH_LONG
-//                                    ).show()
-//                            }
-//
-//                            SignInScreen(navController, state = state, onSignInClick = {
-//                                lifecycleScope.launch {
-//                                    val signInIntentSender = googleAuthUiClient.signIn()
-//                                    launcher.launch(
-//                                        IntentSenderRequest.Builder(
-//                                            signInIntentSender ?: return@launch
-//                                        ).build()
-//                                    )
-//                                }
-//                            })
-//                        }
+
                         composable(Screen.ActiveKeys.route) { ActiveKeysScreen(navController) }
                         composable(Screen.Settings.route) { SettingsScreen(navController) }
-                        composable(Screen.SignIn.route) { SignInScreen(
-                            navController = navController,
-                            intent = null
-                        )}
+//                        composable("sign_in") { SignInScreen(
+//                            navController = navController,
+//                            intent = intent
+//                        )}
                     }
                 }
             }
