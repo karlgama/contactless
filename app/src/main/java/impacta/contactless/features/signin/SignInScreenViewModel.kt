@@ -1,19 +1,14 @@
 package impacta.contactless.features.signin
 
 import android.content.Intent
-import android.util.Log
+import android.content.IntentSender
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import impacta.contactless.infra.database.models.SignInResult
-import impacta.contactless.ui.GoogleAuthUiClient
+import impacta.contactless.ui.GoogleOneTapAuthenticator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @Immutable
@@ -31,39 +26,35 @@ data class SignInScreenUIState(
 
 @HiltViewModel
 class SignInScreenViewModel @Inject constructor(
-    private val googleAuthUiClient: GoogleAuthUiClient
+    private val googleOneTapAuthenticator: GoogleOneTapAuthenticator
 ) : ViewModel() {
 
     private val _sign = MutableStateFlow(SignInScreenUIState(SignInUIState.Loading))
     val sign = _sign.asStateFlow()
 
-    fun onSignIn(intent: Intent): LiveData<SignInResult> {
-        val resultLiveData = MutableLiveData<SignInResult>()
-        Log.d("KEYZ","logging attempt")
-        viewModelScope.launch {
-            val signInResult = googleAuthUiClient.signInWithIntent(intent)
-            resultLiveData.value = signInResult
+    suspend fun onSignInResult(data: Intent?) {
+        val signInResult = data?.let {
+            googleOneTapAuthenticator.signInWithIntent(it)
         }
 
-        return resultLiveData
-    }
-
-    suspend fun signInWithIntent(intent: Intent): SignInResult {
-        return googleAuthUiClient.signInWithIntent(intent)
-    }
-
-    fun onSignInResult(result: SignInResult) {
         _sign.update {
             it.copy(
                 signInUIState = SignInUIState.Success(
-                    isSignInSuccessful = result.data != null,
-                    result.errorMessage
+                    isSignInSuccessful = signInResult != null,
+                    signInResult?.errorMessage
                 )
             )
         }
+
     }
+
+    suspend fun getSignInIntentSender(): IntentSender? {
+        return googleOneTapAuthenticator.signIn()
+    }
+
 
     fun resetState() {
         _sign.value = SignInScreenUIState(SignInUIState.Loading)
     }
 }
+

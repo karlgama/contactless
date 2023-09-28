@@ -17,13 +17,13 @@ import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
 import javax.inject.Inject
 
-class GoogleAuthUiClient @Inject constructor(
+class GoogleOneTapAuthenticator @Inject constructor(
     private val context: Context,
-    private val oneTapClient: SignInClient,
+    private val oneTapClient: SignInClient
 ) {
     private val auth = Firebase.auth
 
-        suspend fun signIn(): IntentSender? {
+    suspend fun signIn(): IntentSender? {
         val result = try {
             oneTapClient
                 .beginSignIn(buildSignInRequest())

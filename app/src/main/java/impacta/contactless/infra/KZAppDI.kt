@@ -7,15 +7,13 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import impacta.contactless.infra.database.AppDatabase
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import impacta.contactless.BuildConfig
-import impacta.contactless.ui.GoogleAuthUiClient
+import impacta.contactless.ui.GoogleOneTapAuthenticator
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -36,5 +34,5 @@ class KZAppDI {
     fun provideOneTapClient(@ApplicationContext context: Context): SignInClient = Identity.getSignInClient(context)
 
     @Provides
-    fun provideGoogleAuthUIClient(@ApplicationContext context: Context, oneTapClient: SignInClient) = GoogleAuthUiClient(context, oneTapClient)
+    fun provideGoogleOneTapAuthenticator(@ApplicationContext context: Context, oneTapClient: SignInClient) = GoogleOneTapAuthenticator(context, oneTapClient)
 }

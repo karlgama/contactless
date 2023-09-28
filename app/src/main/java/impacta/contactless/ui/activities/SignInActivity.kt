@@ -6,72 +6,78 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.auth.api.identity.Identity
 import dagger.hilt.android.AndroidEntryPoint
 import impacta.contactless.MainActivity
 import impacta.contactless.features.signin.SignInScreen
 import impacta.contactless.features.signin.SignInScreenViewModel
 import impacta.contactless.features.signin.SignInUIState
-import impacta.contactless.ui.GoogleAuthUiClient
+import impacta.contactless.ui.components.TopKeyzAppBar
 import impacta.contactless.ui.theme.KeyzTheme
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SignInActivity() : ComponentActivity() {
-    private val googleAuthUiClient by lazy {
-        GoogleAuthUiClient(
-            context = applicationContext,
-            oneTapClient = Identity.getSignInClient(applicationContext)
-        )
-    }
+class SignInActivity : ComponentActivity() {
+    private val viewModel: SignInScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val viewModel: SignInScreenViewModel = hiltViewModel()
-            val signState by viewModel.sign.collectAsStateWithLifecycle()
-            val signInState = signState.signInUIState
+            val signInState by viewModel.sign.collectAsStateWithLifecycle()
+            val state = signInState.signInUIState
 
-            if (signInState is SignInUIState.Success) {
-                Log.d("KEYZ", "loggin success")
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+            if (state is SignInUIState.Success)
+                logSuccess()
 
-            }
+
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.StartIntentSenderForResult(),
                 onResult = { result ->
-                    if (result.resultCode == RESULT_OK) {
-                        lifecycleScope.launch {
-                            val signInResult = googleAuthUiClient.signInWithIntent(
-                                intent = result.data ?: return@launch
-                            )
-                            viewModel.onSignInResult(signInResult)
-                        }
-                    }
+                    if (result.resultCode == RESULT_OK)
+                        launchSignInResult(result.data)
+
                 }
             )
+
             KeyzTheme {
-                SignInScreen(signInState, onSignInClick = {
-                    lifecycleScope.launch {
-                        val signInIntentSender = googleAuthUiClient.signIn()
-                        launcher.launch(
-                            IntentSenderRequest.Builder(
-                                signInIntentSender ?: return@launch
-                            ).build()
-                        )
-                    }
+                TopKeyzAppBar()
+                SignInScreen(state, onSignInClick = {
+                    launchSignInIntent(launcher)
                 })
 
             }
+        }
+    }
+
+    private fun logSuccess() {
+        Log.d("KEYZ", "loggin success")
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun launchSignInResult(data: Intent?) {
+        lifecycleScope.launch {
+            viewModel.onSignInResult(data)
+        }
+    }
+
+    private fun launchSignInIntent(launcher: ActivityResultLauncher<IntentSenderRequest>) {
+        lifecycleScope.launch {
+            launcher.launch(
+                viewModel.getSignInIntentSender()?.let {
+                    IntentSenderRequest.Builder(
+                        it
+                    ).build()
+                }
+            )
         }
     }
 }
