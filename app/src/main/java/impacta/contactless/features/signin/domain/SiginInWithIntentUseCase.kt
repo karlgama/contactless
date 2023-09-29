@@ -5,7 +5,7 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import impacta.contactless.infra.database.models.SignInResult
-import impacta.contactless.infra.database.models.UserData
+import impacta.contactless.infra.database.models.User
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
 import javax.inject.Inject
@@ -24,9 +24,9 @@ class SignInWithIntentUseCase @Inject constructor(
             val user = auth.signInWithCredential(googleCredentials).await().user
             SignInResult(
                 data = user?.run {
-                    UserData(
-                        userId = uid,
-                        username = displayName
+                    User(
+                        id = uid,
+                        name = displayName
                     )
                 },
                 errorMessage = null

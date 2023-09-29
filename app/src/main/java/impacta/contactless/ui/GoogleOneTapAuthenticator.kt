@@ -12,7 +12,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import impacta.contactless.R
 import impacta.contactless.infra.database.models.SignInResult
-import impacta.contactless.infra.database.models.UserData
+import impacta.contactless.infra.database.models.User
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
 import javax.inject.Inject
@@ -45,9 +45,9 @@ class GoogleOneTapAuthenticator @Inject constructor(
             val user = auth.signInWithCredential(googleCredentials).await().user
             SignInResult(
                 data = user?.run {
-                    UserData(
-                        userId = uid,
-                        username = displayName
+                    User(
+                        id = uid,
+                        name = displayName
                     )
                 },
                 errorMessage = null
@@ -85,10 +85,10 @@ class GoogleOneTapAuthenticator @Inject constructor(
         }
     }
 
-    fun getSignedInUser(): UserData? = auth.currentUser?.run {
-        UserData(
-            userId = uid,
-            username = displayName
+    fun getSignedInUser(): User? = auth.currentUser?.run {
+        User(
+            id = uid,
+            name = displayName
         )
     }
 

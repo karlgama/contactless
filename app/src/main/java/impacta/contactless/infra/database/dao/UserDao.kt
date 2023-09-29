@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import impacta.contactless.infra.database.models.User
-import java.util.UUID
 
 @Dao
 interface UserDao {
@@ -13,7 +12,7 @@ interface UserDao {
     fun getAll(): List<User>
 
     @Query("SELECT * FROM users u WHERE u.id = :id")
-    fun findById(id: UUID): User?
+    fun findById(id: String): User?
 
     @Insert
     fun insertAll(vararg users: User)

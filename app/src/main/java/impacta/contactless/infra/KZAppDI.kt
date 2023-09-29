@@ -9,11 +9,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import impacta.contactless.BuildConfig
+import impacta.contactless.features.signin.data.UserRepositoryImpl
+import impacta.contactless.features.signin.domain.SaveUserUseCase
 import impacta.contactless.infra.database.AppDatabase
+import impacta.contactless.ui.GoogleOneTapAuthenticator
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import impacta.contactless.BuildConfig
-import impacta.contactless.ui.GoogleOneTapAuthenticator
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -31,8 +33,19 @@ class KZAppDI {
         Room.databaseBuilder(context, AppDatabase::class.java, "contactless.db").build()
 
     @Provides
-    fun provideOneTapClient(@ApplicationContext context: Context): SignInClient = Identity.getSignInClient(context)
+    fun provideOneTapClient(@ApplicationContext context: Context): SignInClient =
+        Identity.getSignInClient(context)
 
     @Provides
-    fun provideGoogleOneTapAuthenticator(@ApplicationContext context: Context, oneTapClient: SignInClient) = GoogleOneTapAuthenticator(context, oneTapClient)
+    fun provideGoogleOneTapAuthenticator(
+        @ApplicationContext context: Context,
+        oneTapClient: SignInClient
+    ) = GoogleOneTapAuthenticator(context, oneTapClient)
+
+    @Provides
+    fun provideSaveUserUseCase(repository: UserRepositoryImpl) = SaveUserUseCase(repository)
+
+    @Provides
+    fun context(@ApplicationContext context: Context) = context
+
 }
