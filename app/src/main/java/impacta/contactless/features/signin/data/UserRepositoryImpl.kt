@@ -1,5 +1,6 @@
 package impacta.contactless.features.signin.data
 
+import android.content.Context
 import android.util.Log
 import impacta.contactless.infra.database.AppDatabase
 import impacta.contactless.infra.database.dao.UserDao
@@ -8,12 +9,17 @@ import javax.inject.Inject
 
 
 class UserRepositoryImpl @Inject constructor(
-    private val appDatabase: AppDatabase
+    private val context: Context
 ) : UserRepository {
 
-    private lateinit var dao: UserDao;
+    private val appDatabase: AppDatabase by lazy {
+        AppDatabase.build(context)
+    }
+
+    private val dao: UserDao by lazy {
+        appDatabase.userDao()
+    }
     override suspend fun save(user: User) {
-        dao = appDatabase.userDao()
         dao.insertAll(user)
         Log.d("KEYZ", "users: ${dao.findById(user.id)}")
     }

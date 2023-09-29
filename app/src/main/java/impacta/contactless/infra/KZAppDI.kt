@@ -28,9 +28,12 @@ class KZAppDI {
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
 
-    @Provides
-    fun provideDB(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, "contactless.db").build()
+//    @Provides
+//    fun provideDB(@ApplicationContext context: Context): AppDatabase = Room.databaseBuilder(
+//        context,
+//        AppDatabase::class.java,
+//        "contactless.db"
+//    ).build()
 
     @Provides
     fun provideOneTapClient(@ApplicationContext context: Context): SignInClient =
