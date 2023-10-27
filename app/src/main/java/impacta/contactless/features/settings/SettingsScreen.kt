@@ -26,7 +26,6 @@ import impacta.contactless.ui.theme.md_theme_light_onPrimary
 import impacta.contactless.ui.theme.md_theme_light_onSurfaceVariant
 import impacta.contactless.ui.theme.md_theme_light_outlineVariant
 
-// Sempre usar Componentes do Material3
 @Composable
 fun SettingsScreen(
     navController: NavController? = null
@@ -35,14 +34,14 @@ fun SettingsScreen(
         IconTextRow(
             Icons.Default.Search,
             stringResource(R.string.info),
-            md_theme_light_onPrimary,
+            md_theme_light_onSurfaceVariant,
             md_theme_light_onSurfaceVariant,
             {}
         )
         IconTextRow(
             Icons.Default.Add,
             stringResource(R.string.new_key_request),
-            md_theme_light_onPrimary,
+            md_theme_light_onSurfaceVariant,
             md_theme_light_onSurfaceVariant,
             {}
         )

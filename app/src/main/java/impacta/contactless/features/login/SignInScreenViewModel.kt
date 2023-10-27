@@ -1,5 +1,6 @@
 package impacta.contactless.features.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import impacta.contactless.infra.database.models.SignInResult
@@ -14,6 +15,7 @@ class SignInScreenViewModel @Inject constructor() : ViewModel() {
     val state = _state.asStateFlow()
 
     fun onSignResult(result: SignInResult) {
+        Log.d("LOGIN", "result is ${result.data}")
         _state.update {
             it.copy(
                 isSignInSuccessful = result.data != null,

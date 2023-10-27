@@ -30,9 +30,7 @@ import impacta.contactless.ui.theme.md_theme_light_secondary
 import java.util.UUID
 
 @Composable
-fun KeyCard(key: String) {
-    val activity: Activity = LocalContext.current.findActivity()
-
+fun KeyCard(key: String, onClick: (() -> Unit)? = null) {
     Column(
         Modifier
             .padding(horizontal = 30.dp)
@@ -45,11 +43,12 @@ fun KeyCard(key: String) {
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold
         )
-        Surface(shape = RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp), modifier = Modifier.clickable {
-            val intent = Intent(activity, HCEService::class.java)
-            intent.putExtra("ndefMessage", key)
-            activity.startService(intent)
-        }) {
+        Surface(shape = RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp),
+            modifier = Modifier
+                .clickable {
+                    onClick?.let { it() }
+                 }
+        ) {
             Box(
                 modifier = Modifier
                     .background(md_theme_light_secondary)

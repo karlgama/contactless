@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Keyz</string>
-    <string name="settings_screen">Configurações</string>
-    <string name="sign_in">SignIn</string>
+    <string name="settings_screen">Configs</string>
+    <string name="sign_in">Login</string>
     <string name="info">Info</string>
     <string name="new_key_request">Solicitar nova chave</string>
     <string name="delete_account">Apagar conta</string>
