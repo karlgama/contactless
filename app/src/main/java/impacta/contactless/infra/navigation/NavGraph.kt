@@ -55,11 +55,13 @@ fun NavGraphBuilder.login(navController: NavController, applicationContext: Cont
 
             LaunchedEffect(key1 = state.isSignInSuccessful) {
                 if (state.isSignInSuccessful)
+                {
                     Toast.makeText(
-                        applicationContext, "Sign in successful",
+                        applicationContext, "Bem vindo(a)!",
                         Toast.LENGTH_LONG
                     ).show()
                     navController.navigate(Screen.ActiveKeys.route)
+                }
             }
 
             SignInScreen(state = state, onSignInClick = {

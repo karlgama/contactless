@@ -52,6 +52,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import impacta.contactless.features.activekeys.domain.HCEService
 import impacta.contactless.infra.utils.findActivity
 import impacta.contactless.ui.components.DialogWithImage
@@ -74,16 +76,22 @@ fun ActiveKeysScreen(
     val keyState by viewModel.key.collectAsStateWithLifecycle()
     val activeKeyState = keyState.activeKeysUIState
     val mNfcAdapter: NfcAdapter? = null
+    var userUID = ""
     val pullRefreshState = rememberPullRefreshState(
         refreshing = activeKeyState is ActiveKeysUIState.Loading,
-        onRefresh = { viewModel.getKey("01H14G3SP74WAPZSFX4BSSHPH0") }
+        onRefresh = { viewModel.getKey(userUID) }
     )
     val isDialogVisible = rememberSaveable { mutableStateOf(false) }
     val activity: Activity = LocalContext.current.findActivity()
+    val currentUser = Firebase.auth.currentUser
 
     LaunchedEffect(Unit) {
-        viewModel.getKey("01H14G3SP74WAPZSFX4BSSHPH0")
-        Log.d("KEYZ", activeKeyState.toString())
+        currentUser?.let {
+            viewModel.getKey(it.uid)
+            Log.d("KEYZ USER UID", it.uid)
+            Log.d("KEYZ STATE", activeKeyState.toString())
+            userUID = it.uid
+        }
     }
     
 
@@ -100,14 +108,19 @@ fun ActiveKeysScreen(
     }
     else if (activeKeyState is ActiveKeysUIState.Error) {
         var isLoading = activeKeyState is ActiveKeysUIState.Loading
-        Text("Erro ao recuperar chave. Tente novamente",
-            modifier = Modifier
-                .padding(horizontal = Dp(16F))
-                .clickable {
-                    viewModel.getKey("01H14G3SP74WAPZSFX4BSSHPH0")
-                    Log.d("KEYZ", activeKeyState.toString())
-                }
-        )
+        EmptyCards()
+//        Text(if (currentUser?.uid != null) "Erro ao recuperar chave. Código: ${currentUser!!.uid} " else "Erro ao recuperar chave. Tente novamente",
+//            modifier = Modifier
+//                .padding(horizontal = Dp(16F))
+//                .clickable {
+//                    currentUser?.let {
+//                        userUID = it.uid
+//                        viewModel.getKey(userUID)
+//                        Log.d("KEYZ USER", userUID)
+//                        Log.d("KEYZ", activeKeyState.toString())
+//                    }
+//                }
+//        )
         PullRefreshIndicator(
             refreshing = isLoading,
             state = pullRefreshState,

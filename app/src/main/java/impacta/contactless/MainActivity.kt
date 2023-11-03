@@ -75,7 +75,7 @@ class MainActivity() : ComponentActivity() {
                 mutableStateOf(false)
             }
             val user = Firebase.auth.currentUser
-            val initialRoute = if (user != null) Screen.ActiveKeys.route else "login"
+            val initialRoute = if (user != null && user.uid.isNotEmpty()) Screen.ActiveKeys.route else "login"
 
             DisposableEffect(navController) {
                 val callback = NavController.OnDestinationChangedListener { _, destination, _ ->
