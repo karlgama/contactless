@@ -1,6 +1,7 @@
 package impacta.contactless.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,16 +15,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import impacta.contactless.R
-import impacta.contactless.ui.theme.border_default_grey
 
 @Composable
 fun EmptyCards() {
@@ -43,30 +48,20 @@ fun EmptyCards() {
         }
         Box(
             Modifier
-                .padding(horizontal = 90.dp, vertical = 140.dp)
+                .fillMaxWidth()
+                .fillMaxHeight()
         ) {
-            CardImage(0.dp, -14F)
-            CardImage(50.dp, 1.5F)
+            Image(
+                painter = painterResource(id = R.drawable.empty_cards),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize().alpha(0.9f)
+            )
         }
     }
 }
 
 @Composable
-fun CardImage(horizontalOffSet: Dp, rotate: Float) {
-    Box(
-        Modifier
-            .width(180.dp)
-            .fillMaxHeight()
-            .offset(x = horizontalOffSet)
-            .rotate(degrees = rotate)
-
-    ) {
-        Image(
-            painter = rememberAsyncImagePainter(R.drawable.undraw_card),
-            contentDescription = null,
-            modifier = Modifier.border(2.dp, border_default_grey)
-        )
-
-
-    }
+@Preview(showBackground = true)
+private fun PreviewEmptyCards() {
+    EmptyCards()
 }

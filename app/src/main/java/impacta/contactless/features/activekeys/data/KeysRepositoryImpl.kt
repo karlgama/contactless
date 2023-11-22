@@ -9,6 +9,6 @@ class KeysRepositoryImpl @Inject constructor(retrofit: Retrofit): KeysRepository
     private val keysApi = retrofit.create(KeysApi::class.java)
 
     override suspend fun getKeyForUser(id: String): String {
-        return keysApi.getByUserId(id) ?: ""
+        return keysApi.getByUserId(id)?.value ?: ""
     }
 }

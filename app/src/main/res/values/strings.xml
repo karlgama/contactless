@@ -1,10 +1,16 @@
 <resources>
     <string name="app_name">Keyz</string>
-    <string name="settings_screen">Configurações</string>
+    <string name="settings_screen">Perfil</string>
+    <string name="sign_in">Login</string>
     <string name="info">Info</string>
     <string name="new_key_request">Solicitar nova chave</string>
     <string name="delete_account">Apagar conta</string>
     <string name="no_active_key">Você não tem chave ativa</string>
     <string name="active_key">Sua chave ativa</string>
     <string name="key_from">"Chave do "</string>
+    <string name="login_title">Faça login com</string>
+    <string name="img_description_grey_lock">Grey lock</string>
+    <string name="web_client_id">887634639920-ga0fa5d51suuop11jimmaedo6alqimul.apps.googleusercontent.com</string>
+    <string name="servicedesc">servicedesc</string>
+    <string name="aiddescription">aiddescription</string>
 </resources>
